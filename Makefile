@@ -1,6 +1,8 @@
 # Inception
 NAME			=	inception
 
+COMPOSE_ROUTE = srcs/docker-compose.yml
+
 # Colours
 RED				=	\033[0;31m
 GREEN			=	\033[0;32m
@@ -13,16 +15,20 @@ RESET			=	\033[0m
 
 # Rules
 all:		$(NAME)
-			@printf "$(BLUE)==> $(CYAN)Inception built ✅\n\n$(RESET)"
 
 $(NAME):
-			docker-compose up
+			@printf "$(BLUE)==> $(CYAN)Building Inception 🏗️\n\n$(RESET)"
+			docker-compose -p $(NAME) -f $(COMPOSE_ROUTE) up
 
-clean:
-			docker-compose down
+stop:
+		docker-compose -p $(NAME) -f $(COMPOSE_ROUTE) stop
+		@printf "\n$(BLUE)==> $(RED)Inception stopped 🛑\n$(RESET)"
+
+clean:		stop
+			docker-compose -p $(NAME) -f $(COMPOSE_ROUTE) down
 			@printf "\n$(BLUE)==> $(RED)Removed Inception 🗑️\n$(RESET)"
 
 re:			clean all
 			@printf "$(BLUE)==> $(CYAN)Inception rebuilt 🔄\n$(RESET)"
 
-.PHONY:		all clean re
+.PHONY:		all stop clean re
