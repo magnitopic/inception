@@ -17,8 +17,10 @@ RESET			=	\033[0m
 all:		$(NAME)
 
 $(NAME):
-			@printf "$(BLUE)==> $(CYAN)Building Inception 🏗️\n\n$(RESET)"
-			docker-compose -p $(NAME) -f $(COMPOSE_ROUTE) up
+			@printf "\n$(BLUE)==> $(CYAN)Building Inception 🏗️\n\n$(RESET)"
+			docker-compose -p $(NAME) -f $(COMPOSE_ROUTE) up -d
+			@printf "\n$(BLUE)==> $(CYAN)Inception is running ✅\n$(RESET)"
+			@printf "$(BLUE)==> $(BLUE)Accessible on: \n\t$(YELLOW)http://localhost:443\n$(RESET)"
 
 stop:
 		docker-compose -p $(NAME) -f $(COMPOSE_ROUTE) stop
