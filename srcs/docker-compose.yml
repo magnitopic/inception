@@ -12,3 +12,13 @@ services:
         networks:
             - alaparicnet
         restart: always
+    mariadb:
+        container_name: mariadb
+        build:
+            context: ./requirements/mariadb
+        image: alaparic_mariadb
+        env_file:
+            - ../.env
+        networks:
+            - alaparicnet
+        restart: always
