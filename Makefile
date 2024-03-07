@@ -18,7 +18,7 @@ all:		$(NAME)
 
 $(NAME):
 			@printf "\n$(BLUE)==> $(CYAN)Building Inception 🏗️\n\n$(RESET)"
-			docker-compose -p $(NAME) -f $(COMPOSE_ROUTE) up -d
+			@docker-compose -p $(NAME) -f $(COMPOSE_ROUTE) up -d
 			@printf "\n$(BLUE)==> $(CYAN)Inception is running ✅\n$(RESET)"
 			@printf "$(BLUE)==> $(BLUE)Accessible on: \n\t$(YELLOW)http://localhost:443\n$(RESET)"
 

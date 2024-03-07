@@ -18,7 +18,7 @@ services:
             context: ./requirements/mariadb
         image: alaparic_mariadb
         env_file:
-            - ../.env
+            - .env
         networks:
             - alaparicnet
         restart: always
