@@ -22,3 +22,13 @@ services:
         networks:
             - alaparicnet
         restart: always
+    wordpress:
+        container_name: wordpress
+        build:
+            context: ./requirements/wordpress
+        image: alaparic_wordpress
+        env_file:
+            - .env
+        networks:
+            - alaparicnet
+        restart: always
