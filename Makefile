@@ -23,14 +23,17 @@ $(NAME):
 			@printf "$(BLUE)==> $(BLUE)Accessible on: \n\t$(YELLOW)http://localhost:443\n$(RESET)"
 
 stop:
-		docker-compose -p $(NAME) -f $(COMPOSE_ROUTE) stop
+		@docker-compose -p $(NAME) -f $(COMPOSE_ROUTE) stop
 		@printf "\n$(BLUE)==> $(RED)Inception stopped 🛑\n$(RESET)"
 
 clean:		stop
-			docker-compose -p $(NAME) -f $(COMPOSE_ROUTE) down
+			@docker-compose -p $(NAME) -f $(COMPOSE_ROUTE) down
 			@printf "\n$(BLUE)==> $(RED)Removed Inception 🗑️\n$(RESET)"
 
-re:			clean all
+re:			stop
+			@docker-compose -p $(NAME) -f $(COMPOSE_ROUTE) up -d --build
 			@printf "$(BLUE)==> $(CYAN)Inception rebuilt 🔄\n$(RESET)"
+			@printf "\n$(BLUE)==> $(CYAN)Inception is running ✅\n$(RESET)"
+			@printf "$(BLUE)==> $(BLUE)Accessible on: \n\t$(YELLOW)http://localhost:443\n$(RESET)"
 
 .PHONY:		all stop clean re

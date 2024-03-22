@@ -1,3 +1,5 @@
+version: "3.1"
+
 networks:
     alaparicnet:
         name: alaparicnet
@@ -23,6 +25,8 @@ services:
             - alaparicnet
         restart: always
     wordpress:
+        depends_on:
+            - mariadb
         container_name: wordpress
         build:
             context: ./requirements/wordpress

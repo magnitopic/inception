@@ -1,6 +1,5 @@
 #!/bin/bash
 
-apt update && apt install -y wordpress
+# use Wordpress CLI to configure wordpress
 
-# Configure Wordpress's database paramaters
 

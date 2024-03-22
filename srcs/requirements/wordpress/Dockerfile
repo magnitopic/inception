@@ -1,9 +1,12 @@
 FROM debian:bullseye
 
-RUN apt update && apt install -y php-fpm \
+RUN apt update && apt -y install wget \
+								 curl \
+								 bash \
+								 php \
+								 php-fpm \
 								 php-mysqli \
 								 php-mbstring \
-								 php-session \
 								 mariadb-client
 
 COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
