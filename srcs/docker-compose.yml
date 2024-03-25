@@ -21,6 +21,8 @@ services:
         image: alaparic_mariadb
         env_file:
             - .env
+        expose:
+            - "3306"
         networks:
             - alaparicnet
         restart: always
@@ -33,6 +35,8 @@ services:
         image: alaparic_wordpress
         env_file:
             - .env
+        expose:
+            - "9000"
         networks:
             - alaparicnet
         restart: always

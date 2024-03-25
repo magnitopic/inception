@@ -14,4 +14,5 @@ wp config create --dbname=$DATABASE_NAME -dbuser=$WP_USER --dbpass=$DATABASE_PAS
 
 wp core install --url=alaparic.42.fr --title="alaparic" --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASS --admin_email=$WP_APDMIN_EMAIL
 
-php-fpm
+# start php-fpm
+php-fpm7
