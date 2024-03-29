@@ -1,18 +1,21 @@
 #!/bin/bash
 
-mkdir -p /run/mysqld
-chown -R mysql:mysql /run/mysqld
-chmod 777 /run/mysqld
+chown -R mysql: /var/lib/mysql
+chmod 777 /var/lib/mysql
 
-service mariadb start
+# Start MariaDB
+mysql_install_db >/dev/null 2>&1
 
-# Create a database and user
-echo "start"
-mysql -u root -e "CREATE DATABASE IF NOT EXISTS $DATABASE_NAME"
-mysql -u root -e "GRANT ALL PRIVILEGES ON $DATABASE_NAME.* TO '$MARIADB_USERNAME'@'%' IDENTIFIED BY '$MARIADB_ROOT_PASSWORD'"
-mysql -u root -e "FLUSH PRIVILEGES"
-echo "end"
-
-service mariadb stop
+# Configure MariaDB, create a database and user
+echo "-- start of database config file --"
+echo "USE $DATABASE_NAME;" >> /init.sql
+echo "ALETER USER 'root'@'%' INDENTIFIED BY '$DB_ROOT_PASS';" >> /init.sql
+echo "CREATE USER IF NOT EXISTS '$DB_USER' IDENTIFIED BY '$DB_USER_PASS';" >> /init
+echo "CREATE USER IF NOT EXISTS '$DB_ADMIN' IDENTIFIED BY '$DB_ADMIN_PASS';" >> /init.sql
+echo "CREATE DATABASE IF NOT EXISTS $DATABASE_NAME;" >> /init.sql
+echo "GRANT ALL PRIVILEGES ON *.* TO '$DB_ADMIN'@'%' WITH GRANT OPTION;" >> /init.sql
+echo "GRANT SELECT, INSERT, UPDATE, DELETE ON $DATABASE_NAME.* TO '$DB_USER'@'%';" >> /init.sql
+echo "FLUSH PRIVILEGES;" >> /init.sql
+echo "-- end of database config file --"
 
 exec mysqld
