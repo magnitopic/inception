@@ -1,19 +1,20 @@
-version: "3.1"
+version: "3.8"
 
-networks:
-    alaparicnet:
-        name: alaparicnet
-        driver: bridge
 services:
     nginx:
         container_name: nginx
-        build: ./requirements/nginx
+        build:
+            context: ./requirements/nginx
         image: alaparic_nginx
         ports:
             - "443:80"
+        volumes:
+            - wordpress:/wordpress
         networks:
             - alaparicnet
         restart: always
+        depends_on:
+            - wordpress
     mariadb:
         container_name: mariadb
         build:
@@ -23,6 +24,8 @@ services:
             - .env
         expose:
             - "3306"
+        volumes:
+            - db:/var/lib/mysql
         networks:
             - alaparicnet
         restart: always
@@ -37,6 +40,27 @@ services:
             - .env
         expose:
             - "9000"
+        volumes:
+            - wordpress:/wordpress
         networks:
             - alaparicnet
         restart: always
+
+networks:
+    alaparicnet:
+        name: alaparicnet
+        driver: bridge
+
+volumes:
+    db:
+        driver: local
+        driver_opts:
+            type: none
+            device: /tmp/mysql
+            o: bind
+    wordpress:
+        driver: local
+        driver_opts:
+            type: none
+            device: /tmp/wordpress
+            o: bind
