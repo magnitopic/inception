@@ -6,6 +6,8 @@ services:
         build:
             context: ./requirements/nginx
         image: alaparic_nginx
+        env_file:
+            - .env
         ports:
             - "443:80"
         volumes:
@@ -56,11 +58,11 @@ volumes:
         driver: local
         driver_opts:
             type: none
-            device: /tmp/mysql
+            device: ~/inception/db
             o: bind
     wordpress:
         driver: local
         driver_opts:
             type: none
-            device: /tmp/wordpress
+            device: ~/inception/wordpress
             o: bind

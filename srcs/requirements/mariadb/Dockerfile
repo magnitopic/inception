@@ -1,15 +1,13 @@
-FROM debian:bullseye
+FROM alpine:3.18
 
-RUN apt update && apt install mariadb-server -y
+RUN apk update && apk add mariadb
 
-COPY ./tools/my.cnf /etc/mysql/my.cnf
-
+COPY ./tools/my.cnf /etc/my.cnf
 COPY ./tools/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
 
-COPY ./script/config.sh /app/config.sh
+RUN chown -R mysql: /var/lib/mysql
+RUN chmod 777 /var/lib/mysql
 
-WORKDIR /app
+RUN mysql_install_db >/dev/null 2>&1
 
-RUN chmod +x /app/config.sh
-
-CMD ["/app/config.sh"]
+CMD ["mysqld_safe"]
