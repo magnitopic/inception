@@ -25,7 +25,7 @@ $(VOLUME):
 
 $(NAME):	$(VOLUME)
 			@printf "\n$(BLUE)==> $(CYAN)Building Inception 🏗️\n\n$(RESET)"
-			@docker-compose -p $(NAME) -f $(COMPOSE_ROUTE) up --build --remove-orphans
+			@docker-compose -p $(NAME) -f $(COMPOSE_ROUTE) up -d --remove-orphans
 			@printf "\n$(BLUE)==> $(CYAN)Inception is running ✅\n$(RESET)"
 			@printf "$(BLUE)==> $(BLUE)Accessible on: \n\t$(YELLOW)http://localhost:443\n$(RESET)"
 
@@ -43,11 +43,10 @@ fclean:		clean
 			@docker network rm db wordpress
 			@printf "\n$(BLUE)==> $(RED)Removed all images 🗑️\n$(RESET)"
 
-
-re:			stop
+re:			clean
 			@docker-compose -p $(NAME) -f $(COMPOSE_ROUTE) up -d --build
 			@printf "$(BLUE)==> $(CYAN)Inception rebuilt 🔄\n$(RESET)"
 			@printf "\n$(BLUE)==> $(CYAN)Inception is running ✅\n$(RESET)"
 			@printf "$(BLUE)==> $(BLUE)Accessible on: \n\t$(YELLOW)http://localhost:443\n$(RESET)"
 
-.PHONY:		all stop clean re
+.PHONY:		all stop clean fclean re
