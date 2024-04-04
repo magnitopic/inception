@@ -11,7 +11,7 @@ services:
         ports:
             - "443:80"
         volumes:
-            - wordpress:/wordpress
+            - wordpress:/var/www/html
         networks:
             - alaparicnet
         restart: always
@@ -43,7 +43,7 @@ services:
         expose:
             - "9000"
         volumes:
-            - wordpress:/wordpress
+            - wordpress:/var/www/html
         networks:
             - alaparicnet
         restart: always
@@ -58,11 +58,11 @@ volumes:
         driver: local
         driver_opts:
             type: none
-            device: ~/inception/db
+            device: ./web
             o: bind
     wordpress:
         driver: local
         driver_opts:
             type: none
-            device: ~/inception/wordpress
+            device: ./web
             o: bind
