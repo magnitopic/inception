@@ -33,4 +33,4 @@ wp core install --allow-root --path=/wordpress --url=localhost --title=alaparicI
 wp user create --allow-root $WP_USER $WP_USER_EMAIL --role=author --user_pass=$WP_USER_PASS --path=/wordpress
 
 # start php-fpm
-/usr/sbin/php-fpm7.4 -F
+php-fpm8.2 -F
