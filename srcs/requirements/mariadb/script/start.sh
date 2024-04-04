@@ -1,9 +1,22 @@
 #!/bin/bash
 
-rm -f "/etc/mysql/init.sql"
-echo "CREATE DATABASE $MYSQL_DATABASE;" >> /etc/mysql/init.sql
-echo "CREATE USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';" >> /etc/mysql/init.sql
-echo "GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USER'@'%' WITH GRANT OPTION;" >> /etc/mysql/init.sql
-echo "FLUSH PRIVILEGES;" >> /etc/mysql/init.sql
+MYSQL_INIT_FILE="/createdb.sql"
 
-mysqld
+chown -R mysql: /var/lib/mysql
+chmod 777 /var/lib/mysql
+
+mysql_install_db >/dev/null 2>&1
+
+if [ ! -d "/var/lib/mysql/$MYSQL_DATABASE" ]; then
+	rm -f "$MYSQL_INIT_FILE"
+	echo "CREATE DATABASE $MYSQL_DATABASE;" >> "$MYSQL_INIT_FILE"
+	echo "CREATE USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';" >> "$MYSQL_INIT_FILE"
+	echo "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%';" >> "$MYSQL_INIT_FILE"
+	echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';" >> "$MYSQL_INIT_FILE"
+	echo "FLUSH PRIVILEGES;" >> "$MYSQL_INIT_FILE"
+	echo "Starting server"
+	mysqld_safe --init-file=$MYSQL_INIT_FILE >/dev/null 2>&1
+else
+	echo "Starting server"
+	mysqld_safe >/dev/null 2>&1
+fi

@@ -1,18 +1,33 @@
 FROM debian:bullseye
 
-RUN apt update && apt -y install php php-fpm php-mysql curl
+RUN apt-get update && apt-get install -y curl \
+    php7.4 \
+    php7.4-fpm \
+    php7.4-mysql \
+    php7.4-common \
+    mariadb-client \
+    sendmail \
+    wget
 
-COPY ./conf/www.conf /etc/php/fpm8.2/pool.d/www.conf
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+        && chmod +x wp-cli.phar \
+        && mv wp-cli.phar /usr/local/bin/wp
 
-# Create the php directory to enable php-fpm to run
-RUN mkdir -p /var/www/html
+RUN mkdir -p /var/www/html \
+        && chown -R www-data:www-data /var/www/html
 
-# Copy the script and launch it
-COPY ./script/start.sh /tmp/start.sh
+RUN chmod -R 755 /var/www/html
 
-#Go to the html directory
+COPY conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
+
+COPY script/start.sh /var/www/init-wordpress.sh
+
+RUN chmod +x /var/www/init-wordpress.sh
+
+RUN mkdir -p /run/php
+
 WORKDIR /var/www/html
 
-#Launch php-fpm
-CMD ["/bin/bash", "/tmp/start.sh"]
+EXPOSE 9000
 
+CMD ["/var/www/init-wordpress.sh"]
