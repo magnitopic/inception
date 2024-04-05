@@ -58,11 +58,11 @@ volumes:
         driver: local
         driver_opts:
             type: none
-            device: ./web/mariadb
+            device: /home/alaparic/data/mariadb
             o: bind
     wordpress:
         driver: local
         driver_opts:
             type: none
-            device: ./web/wordpress
+            device: /home/alaparic/data/wordpress
             o: bind
