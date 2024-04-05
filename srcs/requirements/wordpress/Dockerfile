@@ -1,20 +1,21 @@
 FROM debian:bullseye
 
 RUN apt-get update && apt-get install -y curl \
-    php7.4 \
-    php7.4-fpm \
-    php7.4-mysql \
-    php7.4-common \
-    mariadb-client \
-    sendmail \
-    wget
+	php7.4 \
+	php7.4-fpm \
+	php7.4-mysql \
+	php7.4-common \
+	mariadb-client \
+	sendmail \
+	wget
 
-RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
-        && chmod +x wp-cli.phar \
-        && mv wp-cli.phar /usr/local/bin/wp
+# Install WordPress
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar --silent
+RUN chmod +x wp-cli.phar
+RUN mv wp-cli.phar /usr/local/bin/wp
 
 RUN mkdir -p /var/www/html \
-        && chown -R www-data:www-data /var/www/html
+	&& chown -R www-data:www-data /var/www/html
 
 RUN chmod -R 755 /var/www/html
 
