@@ -10,6 +10,4 @@ COPY ./script/ssl.sh .
 
 RUN chmod +x ssl.sh
 
-#CMD ["./ssl.sh"]
-
-CMD ["tail", "-f"]
+CMD ["./ssl.sh"]
