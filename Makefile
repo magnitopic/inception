@@ -3,8 +3,8 @@ NAME			=	inception
 
 COMPOSE_ROUTE = srcs/docker-compose.yml
 
-VOLUMES := db wordpress
-VOL_DIR = $(HOME)/inception
+VOLUMES := mariadb wordpress
+VOL_DIR = ./srcs/web
 VOLUME = $(addprefix $(VOL_DIR)/,$(VOLUMES))
 
 # Colours
@@ -40,7 +40,8 @@ clean:		stop
 fclean:		clean
 			@docker rmi alaparic_nginx:latest alaparic_mariadb:latest alaparic_wordpress:latest
 			@docker volume rm $(VOLUME)
-			@docker network rm db wordpress
+			@docker network rm alaparicnet
+			@rm -fr $(VOLUME)
 			@printf "\n$(BLUE)==> $(RED)Removed all images 🗑️\n$(RESET)"
 
 re:			clean

@@ -28,6 +28,4 @@ RUN mkdir -p /run/php
 
 WORKDIR /var/www/html
 
-EXPOSE 9000
-
 CMD ["/var/www/init-wordpress.sh"]
