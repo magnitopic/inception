@@ -2,6 +2,13 @@
 
 This project aims to broaden your knowledge of system administration by using Docker. You will virtualize several Docker images, creating them in your new personal virtual machine.
 
+
+<div align="center">
+  <a href="https://medium.com/@ssterdev/inception-guide-42-project-part-i-7e3af15eb671">
+    <img width="500" alt="Technologies of the inception project" src="https://github.com/magnitopic/inception/assets/21156058/4359e1a0-6f2e-4aa4-8c35-c42b81b931d7">
+  </a>
+</div>
+
 ## Commands
 
 Start the containers ✅
