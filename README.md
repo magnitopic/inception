@@ -29,6 +29,12 @@ Remove the containers 🗑️
 make clean
 ```
 
+Delete images, volumes and networks 🧹
+
+```bash
+make fclean
+```
+
 Restart the containers 🔁
 
 ```bash
@@ -37,7 +43,7 @@ make re
 
 ## Webpage
 
-Onece the containers are up and running, you can access the webpage by going to [https://localhost:443](https://localhost:443).
+Once the containers are up and running, you can access the webpage by going to [https://localhost:443](https://localhost:443).
 
 ## Containers
 
